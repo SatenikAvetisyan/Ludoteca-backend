@@ -1,22 +1,22 @@
 package com.ccsw.tutorial.clients.controller;
 
 import com.ccsw.tutorial.clients.model.ClientsDto;
+import com.ccsw.tutorial.clients.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Tag(name = "Clients", description = "API of Category")
 @RequestMapping(value = "/clients")
 @RestController
 @CrossOrigin(origins = "*")
 public class ClientsController {
-    private long SEQUENCE = 1;
-    private Map<Long, ClientsDto> clientes = new HashMap<Long, ClientsDto>();
+
+    @Autowired
+    private ClientService clientService;
 
     /**
      * Método para recuperar todos los clientes
@@ -26,7 +26,7 @@ public class ClientsController {
     @Operation(summary = "Find", description = "Method that return a list of Clients")
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<ClientsDto> findAll() {
-        return new ArrayList<ClientsDto>(this.clientes.values());
+        return this.clientService.findAll();
     }
 
     /**
@@ -39,16 +39,7 @@ public class ClientsController {
     @RequestMapping(path = { "", "/{id}" }, method = RequestMethod.PUT)
     public void save(@PathVariable(name = "id", required = false) Long id, @RequestBody ClientsDto dto) {
 
-        ClientsDto client;
-
-        if (id == null) {
-            client = new ClientsDto();
-            client.setId(this.SEQUENCE++);
-            this.clientes.put(client.getId(), client);
-        } else {
-            client = this.clientes.get(id);
-        }
-        client.setName(dto.getName());
+        this.clientService.save(id, dto);
     }
 
     /**
@@ -59,6 +50,6 @@ public class ClientsController {
     @Operation(summary = "Delete", description = "Method that deletes a client")
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") Long id) {
-        this.clientes.remove(id);
+        this.clientService.delete(id);
     }
 }
