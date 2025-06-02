@@ -9,7 +9,7 @@ public interface ClientService {
     /**
      * Método para recuperar todos los clientes
      *
-     * @return {@link List} de {@link clients}
+     * @return {@link List} de {@link ClientsDto}
      */
     List<ClientsDto> findAll();
 
