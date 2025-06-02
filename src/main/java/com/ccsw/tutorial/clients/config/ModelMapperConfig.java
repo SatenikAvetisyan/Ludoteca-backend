@@ -1,4 +1,4 @@
-package com.ccsw.tutorial.config;
+package com.ccsw.tutorial.clients.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

@@ -2,7 +2,7 @@ package com.ccsw.tutorial.clients.service;
 
 import com.ccsw.tutorial.clients.model.Clients;
 import com.ccsw.tutorial.clients.model.ClientsDto;
-import com.ccsw.tutorial.repository.ClientsRepository;
+import com.ccsw.tutorial.clients.repository.ClientsRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
