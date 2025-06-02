@@ -50,4 +50,15 @@ public class ClientsController {
         }
         client.setName(dto.getName());
     }
+
+    /**
+     * Método para borrar una categoria
+     *
+     * @param id PK de la entidad
+     */
+    @Operation(summary = "Delete", description = "Method that deletes a client")
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") Long id) {
+        this.clientes.remove(id);
+    }
 }
