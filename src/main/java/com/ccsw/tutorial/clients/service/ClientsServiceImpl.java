@@ -1,38 +1,40 @@
 package com.ccsw.tutorial.clients.service;
 
+import com.ccsw.tutorial.clients.model.Clients;
 import com.ccsw.tutorial.clients.model.ClientsDto;
+import com.ccsw.tutorial.repository.ClientsRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
+@Transactional
 public class ClientsServiceImpl implements ClientService {
 
-    private long SEQUENCE = 1;
-    private Map<Long, ClientsDto> clientes = new HashMap<Long, ClientsDto>();
+    @Autowired
+    ClientsRepository clientsRepository;
 
     /**
      * {@inheritDoc}
      */
-    public List<ClientsDto> findAll() {
-        return new ArrayList<ClientsDto>(this.clientes.values());
+    @Override
+    public List<Clients> findAll() {
+        return (List<Clients>) this.clientsRepository.findAll();
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void save(Long id, ClientsDto dto) {
-        ClientsDto client;
+        Clients client;
 
         if (id == null) {
-            client = new ClientsDto();
-            client.setId(this.SEQUENCE++);
-            this.clientes.put(client.getId(), client);
+            client = new Clients();
         } else {
-            client = this.clientes.get(id);
+            client = this.clientsRepository.findById(id).orElse(null);
         }
         client.setName(dto.getName());
     }
@@ -40,7 +42,11 @@ public class ClientsServiceImpl implements ClientService {
     /**
      * {@inheritDoc}
      */
-    public void delete(Long id) {
-        this.clientes.remove(id);
+    @Override
+    public void delete(Long id) throws Exception {
+        if (this.clientsRepository.findById(id).orElse(null) == null) {
+            throw new Exception("Not exists");
+        }
+        this.clientsRepository.deleteById(id);
     }
 }
