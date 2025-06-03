@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -58,4 +59,18 @@ public class ClientsTest {
 
     }
 
+    public static final Long EXISTS_CLIENT_ID = 1L;
+
+    @Test
+    public void saveExistsClientsIdShouldUpdate() {
+        ClientsDto clientsDto = new ClientsDto();
+        clientsDto.setName(CLIENT_NAME);
+
+        Clients clients = mock(Clients.class);
+        when(clientsRepository.findById(EXISTS_CLIENT_ID)).thenReturn(Optional.of(clients));
+
+        clientService.save(EXISTS_CLIENT_ID, clientsDto);
+
+        verify(clientsRepository).save(clients);
+    }
 }
