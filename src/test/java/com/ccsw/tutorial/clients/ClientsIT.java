@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ClientsIT {
     public static final String LOCALHOST = "http://localhost:";
-    public static final String SERVICE_PATH = "/category";
+    public static final String SERVICE_PATH = "/clients";
 
     @LocalServerPort
     private int port;
@@ -32,11 +33,30 @@ public class ClientsIT {
     };
 
     @Test
-    public void findAllShouldReturnAllCategories() {
+    public void findAllShouldReturnAllClients() {
         ResponseEntity<List<ClientsDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
 
         assertNotNull(response);
         assertEquals(3, response.getBody().size());
     }
 
+    public static final Long NEW_CLIENT_ID = 4L;
+    public static final String NEW_CLIENT_NAME = "CLI4";
+
+    @Test
+    public void saveWithoutIdShouldCreateNewClient() {
+
+        ClientsDto dto = new ClientsDto();
+        dto.setName(NEW_CLIENT_NAME);
+
+        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, new HttpEntity<>(dto), Void.class);
+
+        ResponseEntity<List<ClientsDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
+        assertNotNull(response);
+        assertEquals(4, response.getBody().size());
+
+        ClientsDto clientsSearch = response.getBody().stream().filter(item -> item.getId().equals(NEW_CLIENT_ID)).findFirst().orElse(null);
+        assertNotNull(clientsSearch);
+        assertEquals(NEW_CLIENT_NAME, clientsSearch.getName());
+    }
 }
