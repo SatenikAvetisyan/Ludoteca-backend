@@ -73,4 +73,13 @@ public class ClientsTest {
 
         verify(clientsRepository).save(clients);
     }
+
+    @Test
+    public void deleteExitsClientsIdShouldDelete() throws Exception {
+        Clients clients = mock(Clients.class);
+        when(clientsRepository.findById(EXISTS_CLIENT_ID)).thenReturn(Optional.of(clients));
+
+        clientService.delete(EXISTS_CLIENT_ID);
+        verify(clientsRepository).deleteById(EXISTS_CLIENT_ID);
+    }
 }
