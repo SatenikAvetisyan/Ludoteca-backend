@@ -1,10 +1,12 @@
 package com.ccsw.tutorial.clients;
 
 import com.ccsw.tutorial.clients.model.Clients;
+import com.ccsw.tutorial.clients.model.ClientsDto;
 import com.ccsw.tutorial.clients.repository.ClientsRepository;
 import com.ccsw.tutorial.clients.service.ClientsServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -14,8 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ClientsTest {
@@ -39,4 +40,22 @@ public class ClientsTest {
         assertNotNull(clientes);
         assertEquals(1, clientes.size());
     }
+
+    public static final String CLIENT_NAME = "CLI1";
+
+    @Test
+    public void saveNotExistsClientsIdShouldInsert() {
+        ClientsDto clentsDto = new ClientsDto();
+        clentsDto.setName(CLIENT_NAME);
+
+        ArgumentCaptor<Clients> clients = ArgumentCaptor.forClass(Clients.class);
+
+        clientService.save(null, clentsDto);
+
+        verify(clientsRepository).save(clients.capture());
+
+        assertEquals(CLIENT_NAME, clients.getValue().getName());
+
+    }
+
 }

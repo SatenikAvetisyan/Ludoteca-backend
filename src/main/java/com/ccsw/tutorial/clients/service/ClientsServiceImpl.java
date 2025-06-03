@@ -37,6 +37,8 @@ public class ClientsServiceImpl implements ClientService {
             client = this.clientsRepository.findById(id).orElse(null);
         }
         client.setName(dto.getName());
+
+        this.clientsRepository.save(client);
     }
 
     /**
