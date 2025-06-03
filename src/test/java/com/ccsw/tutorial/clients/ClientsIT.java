@@ -90,4 +90,25 @@ public class ClientsIT {
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
+
+    public static final Long DELETE_CLIENTS_ID = 2L;
+
+    @Test
+    public void deleteWithExistsIdShouldDeleteClients() {
+
+        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + DELETE_CLIENTS_ID, HttpMethod.DELETE, null, Void.class);
+
+        ResponseEntity<List<ClientsDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
+        assertNotNull(response);
+        assertEquals(2, response.getBody().size());
+    }
+
+    @Test
+    public void deleteWithNotExistsIdShouldInternalError() {
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + NEW_CLIENT_ID, HttpMethod.DELETE, null, Void.class);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
 }
