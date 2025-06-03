@@ -9,6 +9,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -58,5 +59,35 @@ public class ClientsIT {
         ClientsDto clientsSearch = response.getBody().stream().filter(item -> item.getId().equals(NEW_CLIENT_ID)).findFirst().orElse(null);
         assertNotNull(clientsSearch);
         assertEquals(NEW_CLIENT_NAME, clientsSearch.getName());
+    }
+
+    public static final Long MODIFY_CLIENT_ID = 3L;
+
+    @Test
+    public void modifyWithExistIdShouldModifyClient() {
+
+        ClientsDto dto = new ClientsDto();
+        dto.setName(NEW_CLIENT_NAME);
+
+        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + MODIFY_CLIENT_ID, HttpMethod.PUT, new HttpEntity<>(dto), Void.class);
+
+        ResponseEntity<List<ClientsDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
+        assertNotNull(response);
+        assertEquals(3, response.getBody().size());
+
+        ClientsDto clientsSearch = response.getBody().stream().filter(item -> item.getId().equals(MODIFY_CLIENT_ID)).findFirst().orElse(null);
+        assertNotNull(clientsSearch);
+        assertEquals(NEW_CLIENT_NAME, clientsSearch.getName());
+    }
+
+    @Test
+    public void modifyWithNotExistIdShouldInternalError() {
+
+        ClientsDto dto = new ClientsDto();
+        dto.setName(NEW_CLIENT_NAME);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + NEW_CLIENT_ID, HttpMethod.PUT, new HttpEntity<>(dto), Void.class);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 }
