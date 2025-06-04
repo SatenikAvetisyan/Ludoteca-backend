@@ -64,7 +64,7 @@ public class CategoryIT {
     public static final Long MODIFY_CATEGORY_ID = 3L;
 
     @Test
-    public void modifyWithExistIdShouldModifyClient() {
+    public void modifyWithExistIdShouldModifyCategory() {
 
         CategoryDto dto = new CategoryDto();
         dto.setName(NEW_CATEGORY_NAME);
@@ -94,7 +94,7 @@ public class CategoryIT {
     public static final Long DELETE_CATEGORY_ID = 2L;
 
     @Test
-    public void deleteWithExistsIdShouldDeleteClients() {
+    public void deleteWithExistsIdShouldDeleteCategory() {
 
         restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + DELETE_CATEGORY_ID, HttpMethod.DELETE, null, Void.class);
 
