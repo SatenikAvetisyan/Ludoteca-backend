@@ -2,7 +2,7 @@ package com.ccsw.tutorial.categories.controller;
 
 import com.ccsw.tutorial.categories.model.Category;
 import com.ccsw.tutorial.categories.model.CategoryDto;
-import com.ccsw.tutorial.categories.services.CategoryService;
+import com.ccsw.tutorial.categories.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.modelmapper.ModelMapper;

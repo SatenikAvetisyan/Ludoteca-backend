@@ -1,4 +1,4 @@
-package com.ccsw.tutorial.categories.services;
+package com.ccsw.tutorial.categories.service;
 
 import com.ccsw.tutorial.categories.model.Category;
 import com.ccsw.tutorial.categories.model.CategoryDto;
