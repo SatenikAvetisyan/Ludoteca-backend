@@ -1,0 +1,8 @@
+package com.ccsw.tutorial.categories.repository;
+
+import com.ccsw.tutorial.categories.model.Category;
+import org.springframework.data.repository.CrudRepository;
+
+public interface CategoryRepository extends CrudRepository<Category, Long> {
+
+}
