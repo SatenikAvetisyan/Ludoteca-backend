@@ -18,6 +18,15 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class AuthorServiceImpl implements AuthorService {
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Author get(Long id) {
+
+        return this.authorRepository.findById(id).orElse(null);
+    }
+
     @Autowired
     AuthorRepository authorRepository;
 
