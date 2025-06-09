@@ -4,10 +4,6 @@ import com.ccsw.tutorial.author.model.Author;
 import com.ccsw.tutorial.categories.model.Category;
 import jakarta.persistence.*;
 
-/**
- * @author ccsw
- *
- */
 @Entity
 @Table(name = "game")
 public class Game {
