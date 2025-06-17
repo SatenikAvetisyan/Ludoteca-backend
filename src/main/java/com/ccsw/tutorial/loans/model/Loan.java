@@ -1,6 +1,6 @@
 package com.ccsw.tutorial.loans.model;
 
-import com.ccsw.tutorial.categories.model.Category;
+import com.ccsw.tutorial.clients.model.Clients;
 import com.ccsw.tutorial.game.model.Game;
 import jakarta.persistence.*;
 
@@ -15,15 +15,15 @@ public class Loan {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    private Clients client;
+
     @Column(name = "loanDate", nullable = false)
     private LocalDate loanDate;
 
     @Column(name = "returnDate", nullable = false)
     private LocalDate returnDate;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
 
     @ManyToOne
     @JoinColumn(name = "game_id", nullable = false)
@@ -78,19 +78,18 @@ public class Loan {
     }
 
     /**
-     * @return category
+     * @return client
      */
-    public Category getCategory() {
-
-        return this.category;
+    public Clients getClient() {
+        return this.client;
     }
 
     /**
-     * @param category new value of {@link #getCategory}.
+     * @param client new value of {@link #getClient}.
      */
-    public void setCategory(Category category) {
+    public void setClient(Clients client) {
 
-        this.category = category;
+        this.client = client;
     }
 
     /**
