@@ -1,6 +1,6 @@
 package com.ccsw.tutorial.loans.model;
 
-import com.ccsw.tutorial.categories.model.CategoryDto;
+import com.ccsw.tutorial.clients.model.ClientsDto;
 import com.ccsw.tutorial.game.model.GameDto;
 
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ public class LoanDto {
 
     private LocalDate returnDate;
 
-    private CategoryDto category;
+    private ClientsDto client;
 
     private GameDto game;
 
@@ -66,19 +66,19 @@ public class LoanDto {
     }
 
     /**
-     * @return category
+     * @return client
      */
-    public CategoryDto getCategory() {
+    public ClientsDto getClient() {
 
-        return this.category;
+        return this.client;
     }
 
     /**
-     * @param category new value of {@link #getCategory}.
+     * @param category new value of {@link #getClient}.
      */
-    public void setCategory(CategoryDto category) {
+    public void setCategory(ClientsDto category) {
 
-        this.category = category;
+        this.client = category;
     }
 
     /**
