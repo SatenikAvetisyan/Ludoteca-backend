@@ -101,9 +101,9 @@ public class Loan {
     }
 
     /**
-     * @param author new value of {@link #getGame}.
+     * @param game new value of {@link #getGame}.
      */
-    public void setAuthor(Game author) {
+    public void setGame(Game game) {
 
         this.game = game;
     }
