@@ -8,6 +8,14 @@ import java.util.List;
 public interface ClientService {
 
     /**
+     * Recupera un {@link  Clients } a través de su ID
+     *
+     * @param id PK de la entidad
+     * @return {@link Clients}
+     */
+    Clients get(Long id);
+
+    /**
      * Método para recuperar todos los {@link Clients}
      *
      * @return {@link List} de {@link Clients}

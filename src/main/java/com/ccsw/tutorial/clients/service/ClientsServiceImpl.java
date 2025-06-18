@@ -20,6 +20,15 @@ public class ClientsServiceImpl implements ClientService {
      * {@inheritDoc}
      */
     @Override
+    public Clients get(Long id) {
+
+        return this.clientsRepository.findById(id).orElse(null);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<Clients> findAll() {
         return (List<Clients>) this.clientsRepository.findAll();
     }
