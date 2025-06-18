@@ -8,6 +8,7 @@ import com.ccsw.tutorial.loans.model.LoanDto;
 import com.ccsw.tutorial.loans.repository.LoanRepository;
 import com.ccsw.tutorial.loans.specification.LoanSpecification;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -60,11 +61,14 @@ public class LoanServiceImpl implements LoanService {
         } else {
             loan = this.loanRepository.findById(id).orElse(null);
         }
+        BeanUtils.copyProperties(dto, loan, "id", "client", "game");
 
         loan.setLoanDate(dto.getLoanDate());
         loan.setReturnDate(dto.getReturnDate());
         loan.setClient(clientService.get(dto.getClient().getId()));
         loan.setGame(gameService.get(dto.getGame().getId()));
+
+        this.loanRepository.save(loan);
 
     }
 
