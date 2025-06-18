@@ -9,6 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface LoanRepository extends CrudRepository<Loan, Long>, JpaSpecificationExecutor<Loan> {
-    @EntityGraph(attributePaths = { "game", "clients" })
+    @EntityGraph(attributePaths = { "game", "client" })
     List<Loan> findAll(Specification<Loan> spec);
 }
