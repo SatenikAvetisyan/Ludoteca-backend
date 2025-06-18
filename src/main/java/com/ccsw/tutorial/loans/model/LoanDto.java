@@ -74,11 +74,11 @@ public class LoanDto {
     }
 
     /**
-     * @param category new value of {@link #getClient}.
+     * @param client new value of {@link #getClient}.
      */
-    public void setCategory(ClientsDto category) {
+    public void setClient(ClientsDto client) {
 
-        this.client = category;
+        this.client = client;
     }
 
     /**
