@@ -37,8 +37,11 @@ public class LoanServiceImpl implements LoanService {
             spec = spec.and(new LoanSpecification(new SearchCriteria("game.title", ":", title)));
 
         if (name != null)
-            ;
-        spec = spec.and((root, query, cb) -> cb.and(cb.lessThanOrEqualTo(root.get("loanDate"), date), cb.greaterThanOrEqualTo(root.get("returnDate"), date)));
+            spec = spec.and(new LoanSpecification(new SearchCriteria("client.name", ":", name)));
+
+        if (date != null)
+            spec = spec.and((root, query, cb) -> cb.and(cb.lessThanOrEqualTo(root.get("loanDate"), date), cb.greaterThanOrEqualTo(root.get("returnDate"), date)));
+
         return loanRepository.findAll(spec);
     }
 
